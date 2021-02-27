@@ -1,14 +1,13 @@
---- target/linux/sunxi/image/Makefile.original	2021-02-17 01:49:42.000000000 +0300
-+++ target/linux/sunxi/image/Makefile	2021-02-27 04:06:52.085239000 +0300
-@@ -16,7 +16,9 @@
- define Build/sunxi-sdcard
- 	rm -f $@.boot
- 	mkfs.fat $@.boot -C $(FAT32_BLOCKS)
--
-+	TMP_HOSTNAME=OPIZVH-$( eval 'tr -dc A-Z </dev/urandom | head -c6' )
-+	echo "kernel.hostname=${TMP_HOSTNAME}" | mcopy -i $@.boot - ::hostname.txt
-+	echo "ServerName=$(TMP_HOSTNAME)" | mcopy -i $@.boot - ::vhusbd.ini
-+	unset TMP_HOSTNAME
- 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.scr ::boot.scr
- 	mcopy -i $@.boot $(DTS_DIR)/$(SUNXI_DTS).dtb ::dtb
- 	mcopy -i $@.boot $(IMAGE_KERNEL) ::uImage
+--- target/linux/sunxi/image/Makefile.original  2021-02-27 06:14:04.404971100 +0300
++++ target/linux/sunxi/image/Makefile   2021-02-27 06:14:34.854257200 +0300
+@@ -17,6 +17,10 @@
+        rm -f $@.boot
+        mkfs.fat $@.boot -C $(FAT32_BLOCKS)
+
++       TMP_HOSTNAME=OPIZVH-$( eval 'tr -dc A-Z </dev/urandom | head -c6' )
++       echo "kernel.hostname=${TMP_HOSTNAME}" | mcopy -i $@.boot - ::hostname.txt
++       echo "ServerName=$(TMP_HOSTNAME)" | mcopy -i $@.boot - ::vhusbd.ini
++       unset TMP_HOSTNAME
+        mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.scr ::boot.scr
+        mcopy -i $@.boot $(DTS_DIR)/$(SUNXI_DTS).dtb ::dtb
+        mcopy -i $@.boot $(IMAGE_KERNEL) ::uImage
