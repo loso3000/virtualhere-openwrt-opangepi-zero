@@ -7,7 +7,7 @@
 +	TMP_HOSTNAME_PART=$( shell eval 'tr -dc A-Z </dev/urandom | head -c6' )
 +	echo "kernel.hostname=OPIZVH-$(TMP_HOSTNAME_PART)" | mcopy -i $@.boot - ::hostname.txt
 +	echo "ServerName=OPIZVH-$(TMP_HOSTNAME_PART)" | mcopy -i $@.boot - ::vhusbd.ini
-+	unset TMP_HOSTNAME_PART
++	undefine TMP_HOSTNAME_PART
  	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.scr ::boot.scr
  	mcopy -i $@.boot $(DTS_DIR)/$(SUNXI_DTS).dtb ::dtb
  	mcopy -i $@.boot $(IMAGE_KERNEL) ::uImage
