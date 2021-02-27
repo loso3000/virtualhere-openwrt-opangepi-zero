@@ -10,21 +10,7 @@ PROG_OPT=/usr/bin/vhusbd-optimized
 CONF_DIR=/vfat0
 CONF_FILE=${CONF_DIR}/vhusbd.ini
 PIDFILE=/var/run/vhusbd.pid
-CONF_DEV="/dev/mmcblk0p1"
 
-_mount_fat() {
-	if grep -qsF -e ${CONF_DEV} "/proc/mounts" ; then
-		echo ${NAME} : ${CONF_DIR} already mount
-	else
-		echo ${NAME} : Mounting ${CONF_DEV} as ${CONF_DIR}
-		mkdir --parent ${CONF_DIR}
-		mount -o noatime,nodiratime,exec ${CONF_DEV} ${CONF_DIR}
-		if [[ -e $CONF_FILE ]]; then
-			echo ${NAME} : Creating $CONF_FILE
-			touch $CONF_FILE
-		fi
-	fi
-}
 
 _should_use_optimized() {
 	if grep -qsF -e "UseOptimized" $CONF_FILE ; then
@@ -43,7 +29,6 @@ _get_prog() {
 
 start_service() {
 	echo ${NAME} : Starting
-	_mount_fat
 	PROG=$( _get_prog )
 	echo ${NAME} : Prog is ${PROG}
     procd_open_instance

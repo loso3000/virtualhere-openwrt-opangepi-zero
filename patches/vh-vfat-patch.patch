@@ -1,0 +1,13 @@
+--- target/linux/sunxi/image/Makefile.original	2021-02-17 01:49:42.000000000 +0300
++++ target/linux/sunxi/image/Makefile	2021-02-27 04:06:52.085239000 +0300
+@@ -16,7 +16,9 @@
+ define Build/sunxi-sdcard
+ 	rm -f $@.boot
+ 	mkfs.fat $@.boot -C $(FAT32_BLOCKS)
+-
++
++	echo "" | mcopy -i $@.boot - ::hostname.txt
++	echo "" | mcopy -i $@.boot - ::vhusbd.ini
+ 	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.scr ::boot.scr
+ 	mcopy -i $@.boot $(DTS_DIR)/$(SUNXI_DTS).dtb ::dtb
+ 	mcopy -i $@.boot $(IMAGE_KERNEL) ::uImage
