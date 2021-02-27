@@ -21,15 +21,16 @@ git clone --quiet https://github.com/filimonic/virtualhere-openwrt-opangepi-zero
 
 echo "Applying patches"
 cp --recursive --force --target-directory ${OPENWRT_BUILD_DIR}/ib  ${OPENWRT_BUILD_DIR}/p/files
-chmod +x ${OPENWRT_BUILD_DIR}/ib/files/usr/bin/vhusbd*
-chmod +x ${OPENWRT_BUILD_DIR}/ib/files/etc/init.d/vhusbd*
-
 
 cd ${OPENWRT_BUILD_DIR}/ib
 echo "Downloading VirtualHere server (unoptimized) ..."
 wget --quiet --show-progress --progress=bar:force --output-document ./files/usr/bin/vhusbd           https://virtualhere.com/sites/default/files/usbserver/vhusbdarm
 echo "Downloading VirtualHere server (optimized) ..."
 wget --quiet --show-progress --progress=bar:force --output-document ./files/usr/bin/vhusbd-optimized https://virtualhere.com/sites/default/files/usbserver/vhusbdarmpi2
+
+echo "Applying permissions"
+chmod +x ${OPENWRT_BUILD_DIR}/ib/files/usr/bin/vhusbd*
+chmod +x ${OPENWRT_BUILD_DIR}/ib/files/etc/init.d/vhusbd*
 
 mkdir --parent ${OPENWRT_TARGET_DIR}
 
