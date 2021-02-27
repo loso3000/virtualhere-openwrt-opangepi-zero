@@ -21,16 +21,24 @@ git clone --quiet https://github.com/filimonic/virtualhere-openwrt-opangepi-zero
 
 echo "Applying patches"
 cp --recursive --force --target-directory ${OPENWRT_BUILD_DIR}/ib  ${OPENWRT_BUILD_DIR}/p/files
+echo "CONFIG_SUNXI_SD_BOOT_PARTSIZE=5"  >> ${OPENWRT_BUILD_DIR}/ib/.config 
+echo "CONFIG_TARGET_ROOTFS_PARTSIZE=32" >> ${OPENWRT_BUILD_DIR}/ib/.config 
 
 cd ${OPENWRT_BUILD_DIR}/ib
 echo "Downloading VirtualHere server (unoptimized) ..."
-wget --quiet --show-progress --progress=bar:force --output-document ./files/usr/bin/vhusbd           https://virtualhere.com/sites/default/files/usbserver/vhusbdarm
+wget --quiet --show-progress --progress=bar:force --output-document ${OPENWRT_BUILD_DIR}/ib/files/usr/bin/vhusbd           https://virtualhere.com/sites/default/files/usbserver/vhusbdarm
 echo "Downloading VirtualHere server (optimized) ..."
-wget --quiet --show-progress --progress=bar:force --output-document ./files/usr/bin/vhusbd-optimized https://virtualhere.com/sites/default/files/usbserver/vhusbdarmpi2
+wget --quiet --show-progress --progress=bar:force --output-document ${OPENWRT_BUILD_DIR}/ib/files/usr/bin/vhusbd-optimized https://virtualhere.com/sites/default/files/usbserver/vhusbdarmpi2
 
 echo "Applying permissions"
 chmod +x ${OPENWRT_BUILD_DIR}/ib/files/usr/bin/vhusbd*
 chmod +x ${OPENWRT_BUILD_DIR}/ib/files/etc/init.d/vhusbd*
+
+echo "Adding external configurations"
+ln -s -f /vfat0/hostname.txt ${OPENWRT_BUILD_DIR}/ib/files/etc/sysctl.d/99-hostname.conf
+
+echo "Applying build patches"
+patch ${OPENWRT_BUILD_DIR}/ib/target/linux/sunxi/image/Makefile ${OPENWRT_BUILD_DIR}/p/patches/vh-vfat-patch.patch
 
 mkdir --parent ${OPENWRT_TARGET_DIR}
 
