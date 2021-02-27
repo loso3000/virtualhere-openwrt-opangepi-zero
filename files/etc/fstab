@@ -1,2 +1,2 @@
-# <file system> <mount point> <type> <options> <dump> <pass>
-/dev/mmcblk0p1  /vfat0        vfat   noatime,nodiratime,exec 0 0
+# <file system> <mount point> <type> <options>                              <dump>  <pass>
+/dev/mmcblk0p1  /vfat0        vfat   rw,relatime,noatime,nodiratime,exec    0       0
