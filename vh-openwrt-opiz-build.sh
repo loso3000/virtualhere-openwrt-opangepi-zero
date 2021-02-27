@@ -43,7 +43,7 @@ patch ${OPENWRT_BUILD_DIR}/ib/target/linux/sunxi/image/Makefile ${OPENWRT_BUILD_
 mkdir --parent ${OPENWRT_TARGET_DIR}
 
 echo "Building ..."
-make --silent image PROFILE=sun8i-h2-plus-orangepi-zero PACKAGES="-fstools -mtd -logd -uboot-envtools -opkg -partx-utils -mkf2fs -e2fsprogs -dnsmasq -iptables -ip6tables -ppp -ppp-mod-pppoe -firewall -odhcpd-ipv6only -odhcp6c -kmod-ipt-offload -dropbear" FILES=files/ BIN_DIR=${OPENWRT_TARGET_DIR}
+make --silent image PROFILE=sun8i-h2-plus-orangepi-zero PACKAGES="block-mount -fstools -mtd -logd -uboot-envtools -opkg -partx-utils -mkf2fs -e2fsprogs -dnsmasq -iptables -ip6tables -ppp -ppp-mod-pppoe -firewall -odhcpd-ipv6only -odhcp6c -kmod-ipt-offload -dropbear" FILES=files/ BIN_DIR=${OPENWRT_TARGET_DIR}
 cd ${OPENWRT_TARGET_DIR}/..
 echo "Removing downloaded data ..."
 rm -fr ${OPENWRT_BUILD_DIR}
