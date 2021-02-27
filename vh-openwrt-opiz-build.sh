@@ -6,6 +6,7 @@ OPENWRT_BUILD_DIR=`mktemp --directory --suffix -openwrt-buildenv`
 #apt-get install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc wget unzip python
 cd ${OPENWRT_BUILD_DIR}
 
+echo "Prange Pi Zero VirtualHere image builder (0646)"
 echo "Downloading OpenWrt ImageBuilder ..."
 mkdir --parent ${OPENWRT_BUILD_DIR}/ib
 wget --quiet --show-progress --progress=bar:force --output-document ${OPENWRT_BUILD_DIR}/ib.tar.xz https://downloads.openwrt.org/releases/${OPENWRT_TARGET_VER}/targets/sunxi/cortexa7/openwrt-imagebuilder-${OPENWRT_TARGET_VER}-sunxi-cortexa7.Linux-x86_64.tar.xz
