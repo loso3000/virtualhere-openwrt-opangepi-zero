@@ -5,8 +5,8 @@
  	mkfs.fat $@.boot -C $(FAT32_BLOCKS)
  
 +	TMP_HOSTNAME_PART=$$( tr -dc A-Z </dev/urandom | head -c6 ) \
-+	&& echo "kernel.hostname=OPIZVH-$$TMP_HOSTNAME_PART" | mcopy -i $@.boot - ::hostname.txt
-+	&& echo "ServerName=OPIZVH-$$TMP_HOSTNAME_PART" | mcopy -i $@.boot - ::vhusbd.ini
++	&& echo "kernel.hostname=OPIZVH-$$TMP_HOSTNAME_PART" | mcopy -i $@.boot - ::hostname.txt \
++	&& echo "ServerName=OPIZVH-$$TMP_HOSTNAME_PART" | mcopy -i $@.boot - ::vhusbd.ini \
 +	&& echo "TMP_HOSTNAME_PART=$$TMP_HOSTNAME_PART
  	mcopy -i $@.boot $(STAGING_DIR_IMAGE)/$(DEVICE_NAME)-boot.scr ::boot.scr
  	mcopy -i $@.boot $(DTS_DIR)/$(SUNXI_DTS).dtb ::dtb
